@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Gim Baby! ❤️</title>
+    <!-- Google Fonts for Star Wars/Sci-Fi feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Oswald for Crawl title, Orbitron for futuristic UI, Share Tech Mono for terminal numbers -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Oswald:wght@500;700&family=Share+Tech+Mono&family=Dancing+Script:wght@700&family=Inter:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="starwars-theme">
+
+    <!-- Particle Canvas for Starfield / Hyperspace Background -->
+    <canvas id="particle-canvas"></canvas>
+
+    <!-- Floating Audio Control (Lightsaber themed) -->
+    <button id="music-toggle" class="music-btn" aria-label="Toggle Music">
+        <i class="fas fa-jedi"></i>
+        <span class="music-wave-bar bar-1"></span>
+        <span class="music-wave-bar bar-2"></span>
+        <span class="music-wave-bar bar-3"></span>
+    </button>
+
+    <!-- HINT MODAL SYSTEM -->
+    <div id="hint-modal" class="modal">
+        <div class="modal-content glass-card">
+            <span class="close-modal">&times;</span>
+            <i class="fas fa-journal-whills hint-icon"></i>
+            <h3>Access Code Hint</h3>
+            <p>The code is recorded in the holocron files as the classic, funny number twice...</p>
+            <div class="hint-code">6969</div>
+            <button id="close-hint-button" class="glowing-btn">Got it! ❤️</button>
+        </div>
+    </div>
+
+    <!-- 1. LOADING SCREEN -->
+    <section id="loading-screen" class="active-screen">
+        <div class="loading-container">
+            <div class="loading-logo">
+                <span class="sw-outline-text">GIM BABY</span>
+                <span class="sw-sub-text">CHRONICLES</span>
+            </div>
+            <p class="loading-text">Loading something special...</p>
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="loading-progress"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. LOCK SCREEN (Imperial Terminal) -->
+    <section id="lock-screen" class="hidden-screen">
+        <div class="keypad-cabinet glass-card starwars-border">
+            <!-- Boyfriend's Portrait in a small user circle with lightsaber border -->
+            <div class="avatar-container" id="avatar-hint-trigger" title="Click for a hint!">
+                <img src="new.jpeg" alt="Gim Baby's Portrait" class="avatar-image">
+                <div class="avatar-glow"></div>
+                <div class="hint-pulse"></div>
+            </div>
+
+            <h2 class="lock-title">SYSTEM SECURED</h2>
+            <p class="lock-subtitle">Enter passcode to bypass galactic barrier</p>
+
+            <!-- Normal Numeric Password Input with lightsaber-esque borders -->
+            <div class="password-input-wrapper">
+                <div class="saber-side saber-blue"></div>
+                <input type="password" id="password-input" class="normal-password-input" placeholder="••••"
+                    maxlength="4" inputmode="numeric" pattern="[0-9]*" autofocus autocomplete="off">
+                <div class="saber-side saber-red"></div>
+            </div>
+
+            <p class="input-tip-text">Tap image for access log</p>
+        </div>
+    </section>
+
+    <!-- 3. TRANSITIONAL SECRET GREETING SCREEN (Star Wars Crawl) -->
+    <section id="greeting-screen" class="hidden-screen crawl-screen-outer">
+
+        <!-- Blue Intro Text: "23 years ago in a galaxy far far away Gim Baby was born" -->
+        <div class="blue-intro-text" id="blue-intro-text">
+            23 years ago in a galaxy far, far away...<br>Gim Baby was born.
+        </div>
+
+        <!-- Star Wars 3D Scrolling Crawl Frame -->
+        <div class="crawl-viewport" id="crawl-viewport">
+            <div class="crawl-content" id="crawl-content">
+                <div class="crawl-title">EPISODE XXIII</div>
+                <div class="crawl-subtitle">THE BIRTH OF THE CHOSEN ONE</div>
+
+                <p>It is a period of great celebration in the cosmos. GIM BABY, the legendary figure of the Outer Rim,
+                    marks his 23rd solar rotation.</p>
+
+                <p>As the stars align in perfect coordinate harmony, allies and starfighters from across the galaxy
+                    gather to pay tribute to the chosen one.</p>
+
+                <p>The holocron of fate holds bright paths ahead, and the galaxy stands prepared for the next rotation
+                    of adventures. A great destiny awaits!</p>
+
+                <p>Bypassing all sector blockades and hyperspace anomalies, search coordinates reveal a special
+                    transmission waiting at the bridge terminal...</p>
+            </div>
+        </div>
+
+        <!-- Skip/Close Button for Crawl -->
+        <button id="open-gift-btn" class="glowing-btn crawl-bypass-btn hidden-element">
+            <span>Enter Coordinates 🛸</span>
+        </button>
+    </section>
+
+    <!-- 4. COUNTDOWN SCREEN (Holocron Interface) -->
+    <section id="countdown-screen" class="hidden-screen">
+        <div class="countdown-cabinet glass-card text-center starwars-border">
+            <div class="avatar-container-small">
+                <img src="new.jpeg" alt="Gim Baby" class="avatar-image-small">
+                <div class="avatar-glow-rose"></div>
+            </div>
+
+            <h2 class="countdown-header-title font-orbitron">MISSION LOG: GIM BABY</h2>
+
+            <p class="tracker-label">Galactic Lifespan Elapsed</p>
+
+            <!-- Count-up completed time tracker (Sci-fi styled) -->
+            <div class="completed-tracker">
+                <div class="tracker-unit">
+                    <span class="tracker-val font-sharetech" id="completed-years">22</span>
+                    <span class="tracker-desc">YEARS</span>
+                </div>
+                <div class="tracker-unit">
+                    <span class="tracker-val font-sharetech" id="completed-months">11</span>
+                    <span class="tracker-desc">MONTHS</span>
+                </div>
+                <div class="tracker-unit">
+                    <span class="tracker-val font-sharetech" id="completed-days">29</span>
+                    <span class="tracker-desc">DAYS</span>
+                </div>
+            </div>
+
+            <div class="time-details font-sharetech" id="completed-time-details">
+                <span id="tracker-hours">00</span>h : <span id="tracker-minutes">00</span>m : <span
+                    id="tracker-seconds">00</span>s
+            </div>
+
+            <div class="countdown-divider"></div>
+            <!-- Upcoming Birthday -->
+            <p id="countdown-heading" class="countdown-subtitle font-orbitron text-yellow">Calculating next orbital
+                alignment...</p>
+
+            <div class="countdown-timer" id="countdown-clock">
+                <div class="clock-unit starwars-clock-unit">
+                    <span id="clock-hours" class="font-sharetech">--</span>
+                    <span class="clock-desc">Hours</span>
+                </div>
+                <span class="clock-colon">:</span>
+                <div class="clock-unit starwars-clock-unit">
+                    <span id="clock-minutes" class="font-sharetech">--</span>
+                    <span class="clock-desc">Mins</span>
+                </div>
+                <span class="clock-colon">:</span>
+                <div class="clock-unit starwars-clock-unit">
+                    <span id="clock-seconds" class="font-sharetech">--</span>
+                    <span class="clock-desc">Secs</span>
+                </div>
+            </div>
+
+            <button id="countdown-next-btn" class="glowing-btn countdown-next">
+                <span>Enter Bridge 🛸</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- 5. MAIN WEBSITE SCREEN -->
+    <section id="main-screen" class="hidden-screen">
+        <main class="main-content-panel">
+
+            <!-- 5A. HOME TAB PANEL -->
+            <div id="tab-home" class="tab-panel active-panel">
+                <div class="home-hero-card glass-card starwars-border">
+                    <div class="home-portrait-wrapper">
+                        <img src="new.jpeg" alt="Gim Baby" class="home-portrait">
+                        <div class="image-border-glow"></div>
+                        <div class="floating-hearts-container" id="home-portrait-hearts"></div>
+                    </div>
+                    <div class="home-text-side">
+                        <span class="home-badge font-orbitron">THE CHOSEN ONE 💫</span>
+                        <h1 class="home-title font-orbitron text-yellow text-glow-yellow">GIM BABY</h1>
+                        <p class="home-quote" id="home-quote-rotator">"A long time ago, in a galaxy far, far away... Gim
+                            Baby was born!"</p>
+
+                        <div class="quick-stats">
+                            <div class="stat-item">
+                                <i class="fas fa-space-shuttle"></i>
+                                <span class="font-sharetech">2003.07.29</span>
+                            </div>
+                            <div class="stat-item">
+                                <i class="fas fa-solar-panel"></i>
+                                <span id="home-age-brief" class="font-sharetech">23 Rotations</span>
+                            </div>
+                        </div>
+
+                        <div class="action-suggestions">
+                            <button class="nav-shortcut-btn" onclick="switchTab('memories')">
+                                <i class="fas fa-journal-whills"></i> Star Logs
+                            </button>
+                            <button class="nav-shortcut-btn highlight-btn" onclick="switchTab('celebrate')">
+                                <i class="fas fa-birthday-cake"></i> Celebrate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5B. MEMORIES TAB PANEL (Auto-sliding monitors - fit check) -->
+            <div id="tab-memories" class="tab-panel hidden-panel">
+                <div class="memories-container">
+                    <div class="memories-header-section text-center">
+                        <h2 class="panel-section-title font-orbitron text-yellow">Star Logs</h2>
+                        <p class="panel-section-subtitle font-orbitron">Chapter sequences of our stellar adventures</p>
+
+                        <!-- Tabs -->
+                        <div class="gallery-selector-tabs">
+                            <button class="gallery-tab active-gallery-tab" id="gal-tab-1">
+                                <i class="fas fa-jedi"></i> Chapter I
+                            </button>
+                            <button class="gallery-tab" id="gal-tab-2">
+                                <i class="fas fa-rebel"></i> Chapter II
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Slide 1 -->
+                    <div id="gallery-container-1" class="carousel-outer active-gallery">
+                        <div class="carousel-inner" id="carousel-inner-1">
+
+                            <div class="carousel-item active-slide"
+                                onclick="openLightbox('images1/1.jpeg', 'Love & Laughter 💖')">
+                                <div class="carousel-image-box">
+                                    <img src="images1/1.jpeg" alt="Chapter One - 1">
+                                </div>
+                                <div class="carousel-label">Love & Laughter 💖</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images1/2.jpeg', 'Holding Hands 🤝')">
+                                <div class="carousel-image-box">
+                                    <img src="images1/2.jpeg" alt="Chapter One - 2">
+                                </div>
+                                <div class="carousel-label">Holding Hands 🤝</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images1/3.jpeg', 'Golden Hours 🌅')">
+                                <div class="carousel-image-box">
+                                    <img src="images1/3.jpeg" alt="Chapter One - 3">
+                                </div>
+                                <div class="carousel-label">Golden Hours 🌅</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images1/4.jpeg', 'Countless smiles 😊')">
+                                <div class="carousel-image-box">
+                                    <img src="images1/4.jpeg" alt="Chapter One - 4">
+                                </div>
+                                <div class="carousel-label">Countless smiles 😊</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images1/5.jpeg', 'Under the stars ✨')">
+                                <div class="carousel-image-box">
+                                    <img src="images1/5.jpeg" alt="Chapter One - 5">
+                                </div>
+                                <div class="carousel-label">Under the stars ✨</div>
+                            </div>
+
+                        </div>
+
+                        <!-- Controls -->
+                        <button class="carousel-btn prev-btn" id="prev-btn-1">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button class="carousel-btn next-btn" id="next-btn-1">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                        <div class="carousel-indicators" id="indicators-1">
+                            <span class="indicator-dot active-dot" data-slide="0"></span>
+                            <span class="indicator-dot" data-slide="1"></span>
+                            <span class="indicator-dot" data-slide="2"></span>
+                            <span class="indicator-dot" data-slide="3"></span>
+                            <span class="indicator-dot" data-slide="4"></span>
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div id="gallery-container-2" class="carousel-outer hidden-gallery">
+                        <div class="carousel-inner" id="carousel-inner-2">
+
+                            <div class="carousel-item active-slide"
+                                onclick="openLightbox('images2/6.jpeg', 'Silly Moments 🤪')">
+                                <div class="carousel-image-box">
+                                    <img src="images2/6.jpeg" alt="Chapter Two - 1">
+                                </div>
+                                <div class="carousel-label">Silly Moments 🤪</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images2/7.jpeg', 'My safe refuge 🌸')">
+                                <div class="carousel-image-box">
+                                    <img src="images2/7.jpeg" alt="Chapter Two - 2">
+                                </div>
+                                <div class="carousel-label">My safe refuge 🌸</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images2/8.jpeg', 'Comfort and Joy 🥰')">
+                                <div class="carousel-image-box">
+                                    <img src="images2/8.jpeg" alt="Chapter Two - 3">
+                                </div>
+                                <div class="carousel-label">Comfort and Joy 🥰</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images2/9.jpeg', 'Our Secret Spots 🍃')">
+                                <div class="carousel-image-box">
+                                    <img src="images2/9.jpeg" alt="Chapter Two - 4">
+                                </div>
+                                <div class="carousel-label">Our Secret Spots 🍃</div>
+                            </div>
+
+                            <div class="carousel-item" onclick="openLightbox('images2/10.jpeg', 'Forever Together ♾️')">
+                                <div class="carousel-image-box">
+                                    <img src="images2/10.jpeg" alt="Chapter Two - 5">
+                                </div>
+                                <div class="carousel-label">Forever Together ♾️</div>
+                            </div>
+
+                        </div>
+
+                        <!-- Controls -->
+                        <button class="carousel-btn prev-btn" id="prev-btn-2">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <button class="carousel-btn next-btn" id="next-btn-2">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+
+                        <div class="carousel-indicators" id="indicators-2">
+                            <span class="indicator-dot active-dot" data-slide="0"></span>
+                            <span class="indicator-dot" data-slide="1"></span>
+                            <span class="indicator-dot" data-slide="2"></span>
+                            <span class="indicator-dot" data-slide="3"></span>
+                            <span class="indicator-dot" data-slide="4"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5C. EXCLUSIVE CELEBRATE TAB PANEL (Cake & blow candles) -->
+            <div id="tab-celebrate" class="tab-panel hidden-panel">
+                <div class="celebrate-container glass-card starwars-border text-center">
+                    <h2 class="panel-section-title font-orbitron text-yellow">Celebrate Gim Baby</h2>
+                    <p class="celebrate-intro font-orbitron">23 celestial rotation candle ritual. Blow them out to
+                        fulfill your wish!</p>
+
+                    <div class="cake-arena">
+                        <!-- Layer 1 (Top Cream) -->
+                        <div class="cake-box cake-layer-3">
+                            <!-- 23 Glowing Candles Container -->
+                            <div class="candles-wrapper" id="candles-wrapper">
+                                <!-- Candles will be rendered dynamically via JS to maintain 23 unique counts -->
+                            </div>
+                        </div>
+
+                        <!-- Layer 2 (Middle Cake) -->
+                        <div class="cake-box cake-layer-2"></div>
+
+                        <!-- Layer 3 (Bottom Cake) -->
+                        <div class="cake-box cake-layer-1"></div>
+
+                        <!-- Platter -->
+                        <div class="cake-plate"></div>
+                    </div>
+
+                    <!-- Blowing Buttons -->
+                    <div class="celebrate-action-bar">
+                        <button id="blow-candles-btn" class="glowing-btn blow-btn">
+                            <i class="fas fa-wind"></i> Make Wish & Blow! 🌬️
+                        </button>
+                        <button id="rekindle-candles-btn" class="glowing-btn rekindle-btn hidden-element">
+                            <i class="fas fa-fire"></i> Rekindle Candles 🔥
+                        </button>
+                    </div>
+
+                    <div id="wish-outcome-banner" class="wish-banner font-orbitron hidden-message">
+                        ✨ MAY THE FORCE BE WITH YOU, GIM BABY! Happy Birthday! 🚀🎂
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5D. LETTER TAB PANEL -->
+            <div id="tab-letter" class="tab-panel hidden-panel">
+                <div class="letter-container">
+                    <div class="envelope-wrapper" id="envelope-wrapper">
+
+                        <div class="envelope-outer" id="envelope-outer">
+                            <div class="envelope-flap"></div>
+                            <div class="envelope-pocket"></div>
+                            <div class="wax-seal-btn" id="open-letter-seal" title="Break the seal to read mine">
+                                <div class="heart-seal-stamp">
+                                    <i class="fas fa-jedi-order"></i>
+                                </div>
+                                <div class="seal-glow"></div>
+                            </div>
+                            <p class="envelope-tag">For Gim Baby ❤️</p>
+                        </div>
+
+                        <div class="letter-sheet glass-card starwars-border hidden-sheet" id="letter-sheet">
+                            <div class="letter-hearts-decoration">
+                                <i class="fas fa-jedi lhd-1 text-yellow"></i>
+                                <i class="fas fa-award lhd-2 text-yellow"></i>
+                                <i class="fas fa-jedi lhd-3 text-yellow"></i>
+                            </div>
+
+                            <h2 class="letter-sheet-title font-orbitron text-yellow">Transmission Log 🖋...</h2>
+
+                            <div class="letter-body-content" id="letter-text-container">
+                                <p class="letter-para font-dancing">Happy 23rd Birthday, GIM BABY! 🎉❤️</p>
+                                <p class="letter-para">23 years ago, the best person ever was born, and somehow, out of
+                                    everyone in this galaxy, I got lucky enough to call you mine. 🥹 I still remember
+                                    the first time I met you. I never, ever thought I'd have you. You didn't even look
+                                    at me! 😒😂 I was so angry with you back then. But look at us now. ❤️</p>
+                                <p class="letter-para">You are honestly the best thing that has ever happened to me. You
+                                    know how almost everything in my life always seems to go the wrong way, but meeting
+                                    you is the BEST THING EVER happened to me. You became my safe place, my happiness,
+                                    and the person I always want to be with. 🥺💖</p>
+                                <p class="letter-para">I know you're going to achieve everything you're working for. One
+                                    day you'll look back and realize how far you've come. I'm already so proud of you.
+                                    🌍✨</p>
+                                <p class="letter-para">No matter what happens, please remember that I'm always here for
+                                    you. Through your good days, bad days, stressful days, and everything in between.
+                                    You never have to carry your problems alone. If something is bothering you, please
+                                    tell me. Don't keep everything inside. We'll face it together, always. 🤍</p>
+                                <p class="letter-para">Thank you for loving me, for making me laugh, for taking care of
+                                    me, for being patient with me, and for being you. I hope this year brings you
+                                    endless happiness, good health, success, peace, and every single thing your heart
+                                    wishes for because you deserve nothing less. 💫</p>
+                                <p class="letter-para font-dancing signature-line text-right">Happy 23rd Birthday to my
+                                    favorite person, my biggest comfort, and the love of my life.</p>
+                                <p class="letter-para text-right font-bold text-rose">I love you FOREVER & EVER & EVER
+                                    ❤️♾️</p>
+                            </div>
+
+                            <div class="letter-footer">
+                                <button id="seal-letter-back" class="text-btn"><i class="fas fa-reply-all"></i> Archive
+                                    Transmission</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Fixed Tab Navigation (Sci-fi control tray) -->
+        <nav class="bottom-nav-bar glass-card starwars-border">
+            <button class="nav-item active-nav-item" data-tab="home">
+                <i class="fas fa-space-shuttle"></i>
+                <span>Bridge</span>
+            </button>
+            <button class="nav-item" data-tab="memories">
+                <i class="fas fa-journal-whills"></i>
+                <span>Logs</span>
+            </button>
+            <button class="nav-item" data-tab="celebrate">
+                <i class="fas fa-gift"></i>
+                <span>Celebrate</span>
+            </button>
+            <button class="nav-item" data-tab="letter">
+                <i class="fas fa-scroll"></i>
+                <span>Hologram</span>
+            </button>
+        </nav>
+    </section>
+
+    <!-- FULLSCREEN LIGHTBOX -->
+    <div id="lightbox" class="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <div class="lightbox-content-box" onclick="event.stopPropagation()">
+            <img id="lightbox-img" src="" alt="Zoomed log scan">
+            <p id="lightbox-caption" class="lightbox-caption"></p>
+        </div>
+    </div>
+
+    <!-- Web Audio API Controller Script -->
+    <script src="script.js"></script>
+</body>
+
+</html>
