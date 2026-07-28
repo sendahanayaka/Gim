@@ -690,6 +690,12 @@ section {
     margin-bottom: 2.2rem;
 }
 
+.countdown-next {
+    display: block;
+    margin: 1.5rem auto 0 auto;
+    width: fit-content;
+}
+
 .clock-unit {
     display: flex;
     flex-direction: column;
@@ -1209,20 +1215,7 @@ section {
     z-index: 5;
 }
 
-/* Neon Lightsaber Energy Line overlays the Middle Layer's body */
-.cake-layer-2::after {
-    content: '';
-    position: absolute;
-    top: 25px;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: #00f0ff;
-    box-shadow: 0 0 12px #00f0ff, 0 0 3px #fff;
-    border-radius: 50% / 2px;
-    opacity: 0.85;
-    z-index: 6;
-}
+/* Removed neon lightsaber middle line overlay */
 
 /* Top Cream Layer - Star Wars Classic Yellow banner frosting */
 .cake-layer-3 {
@@ -1418,56 +1411,79 @@ section {
     align-items: center;
 }
 
-/* Unopened envelope styling */
+/* Unopened Galactic Datacard styling */
 .envelope-outer {
     width: 100%;
     height: 310px;
-    background: #08090c;
+    background: #020617;
     border-radius: 12px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    box-shadow: 0 0 25px rgba(255, 232, 31, 0.25), inset 0 0 20px rgba(255, 232, 31, 0.05);
     position: relative;
-    border: 1.5px solid var(--accent-yellow);
+    border: 2px solid var(--accent-yellow);
     overflow: hidden;
     z-index: 10;
     transition: transform 0.8s ease, opacity 0.6s ease;
     display: flex;
-    justify-content: center;
-    align-items: flex-end;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
     padding-bottom: 2.2rem;
 }
 
+/* Sci-Fi Datacard Header Bar */
 .envelope-flap {
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
-    height: 0;
-    border-left: 260px solid transparent;
-    border-right: 260px solid transparent;
-    border-top: 155px solid rgba(255, 232, 31, 0.12);
+    width: 100%;
+    height: 35px;
+    background: linear-gradient(180deg, rgba(255, 232, 31, 0.15) 0%, transparent 100%);
+    border-bottom: 1px solid rgba(255, 232, 31, 0.2);
     z-index: 12;
-    transform-origin: top;
-    transition: transform 0.6s 0.2s ease;
+    transition: all 0.5s ease;
 }
 
+.envelope-flap::before {
+    content: 'SECURITY TRANSMISSION';
+    position: absolute;
+    top: 10px;
+    left: 20px;
+    color: var(--accent-yellow);
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+}
+
+.envelope-flap::after {
+    content: 'CLASSIFIED';
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    color: #ef4444;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 2px;
+    animation: softPulse 1.5s infinite alternate;
+}
+
+/* Sci-Fi Datacard Footer Bar */
 .envelope-pocket {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: 0;
-    height: 0;
-    border-left: 260px solid rgba(255, 232, 31, 0.04);
-    border-right: 260px solid rgba(255, 232, 31, 0.04);
-    border-top: 155px solid transparent;
+    width: 100%;
+    height: 40px;
+    background: linear-gradient(0deg, rgba(255, 232, 31, 0.05) 0%, transparent 100%);
+    border-top: 1px solid rgba(255, 232, 31, 0.1);
     z-index: 11;
 }
 
 .wax-seal-btn {
     position: absolute;
-    top: 130px;
-    left: calc(50% - 30px);
-    width: 60px;
-    height: 60px;
+    top: 120px;
+    left: calc(50% - 35px);
+    width: 70px;
+    height: 70px;
     border-radius: 50%;
     z-index: 20;
     cursor: pointer;
@@ -1478,21 +1494,22 @@ section {
     transform: scale(1.08) rotate(5deg);
 }
 
+/* Glowing Holographic core button */
 .heart-seal-stamp {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background: var(--accent-yellow);
+    background: radial-gradient(circle, #ffe81f 0%, #eab308 70%, #ca8a04 100%);
     display: flex;
     justify-content: center;
     align-items: center;
     color: #000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6), inset 1px 1px 3px rgba(255, 255, 255, 0.4);
+    border: 3px double #000;
+    box-shadow: 0 0 20px var(--accent-yellow-glow), inset 0 0 10px rgba(255, 255, 255, 0.6);
 }
 
 .heart-seal-stamp i {
-    font-size: 1.4rem;
-    animation: softPulse 1.5s infinite alternate;
+    font-size: 1.6rem;
 }
 
 .seal-glow {
@@ -1508,11 +1525,15 @@ section {
 }
 
 .envelope-tag {
-    font-family: 'Share Tech Mono', monospace;
+    font-family: 'Orbitron', sans-serif;
     color: var(--accent-yellow);
-    font-size: 1rem;
+    font-size: 0.8rem;
     z-index: 15;
     pointer-events: none;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    text-shadow: 0 0 8px var(--accent-yellow-glow);
     letter-spacing: 1px;
     text-transform: uppercase;
 }
